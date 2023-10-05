@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include uniflowerp *.css
+recursive-include uniflowerp *.csv
+recursive-include uniflowerp *.html
+recursive-include uniflowerp *.ico
+recursive-include uniflowerp *.js
+recursive-include uniflowerp *.json
+recursive-include uniflowerp *.md
+recursive-include uniflowerp *.png
+recursive-include uniflowerp *.py
+recursive-include uniflowerp *.svg
+recursive-include uniflowerp *.txt
+recursive-exclude uniflowerp *.pyc
