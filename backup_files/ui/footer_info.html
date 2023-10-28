@@ -1,0 +1,31 @@
+<style>
+	.center {
+	  margin: auto;
+	  width: 60%;
+	  padding: 10px;
+  		text-align: center;
+	}
+	</style>
+<div class="footer-info">
+	<div class="row">
+		<div class="center">
+			{% if copyright %}
+			&copy; {{ copyright }}
+			{% endif %}
+			{% if footer_address %}
+			{% if copyright %}<br>{% endif %}
+			{{ footer_address }}
+			{% endif %}
+		</div>
+		{# powered #}
+		<div class="footer-col-right col-sm-6 col-12 footer-powered">
+			{% block powered %}
+			{%- if footer_powered -%}
+				{{ footer_powered }}
+			{%- else -%}
+				{% include "templates/includes/footer/footer_powered.html" %}
+			{%- endif -%}
+			{% endblock %}
+		</div>
+	</div>
+</div>
