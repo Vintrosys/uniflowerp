@@ -1,0 +1,75 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-10-16 16:37:27.521849",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "name1",
+  "phone_no",
+  "email",
+  "source",
+  "source_detail",
+  "created_date_and_time",
+  "lead_id"
+ ],
+ "fields": [
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name"
+  },
+  {
+   "fieldname": "phone_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Phone No"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email"
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Source",
+   "options": "Lead Source"
+  },
+  {
+   "fieldname": "source_detail",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Source Detail",
+   "options": "Lead Source Details"
+  },
+  {
+   "fieldname": "created_date_and_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Created Date and Time"
+  },
+  {
+   "fieldname": "lead_id",
+   "fieldtype": "Link",
+   "label": "Lead ID",
+   "options": "Lead"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-10-16 16:38:43.296735",
+ "modified_by": "Administrator",
+ "module": "Uniflowerp",
+ "name": "Lead Duplicate Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
