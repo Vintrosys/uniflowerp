@@ -36,7 +36,13 @@ apps/frappe/frappe/public/scss/website/footer.scss:
 	border-top: 1px solid $border-color;
 }
 
+### Frappe/ERP next code files changes.
+Paths: 
+1./frappe-bench/apps/erpnext/erpnext/crm/doctype/lead/lead.py
+2./frappe-bench/apps/frappe/frappe/desk/form/assign_to.py
+3./frappe-bench/apps/frappe/frappe/public/js/desk.bundle.js
 
-
-
+Run commands: 
+bench build 
+sudo supervisorctl reload
 
