@@ -4,9 +4,9 @@ def validate(self, event):
 
     if not self.get("__islocal") and self.allow == "Company":
 
-        frappe.msgprint("User Permission updation moved to background job, It will complete shortly.")
+        frappe.msgprint("User Permission updating...")
 
-        frappe.enqueue(changing_user_permission, self = self, queue = "long")
+        changing_user_permission(self)
 
 def after_insert(self, event):
 
