@@ -118,13 +118,13 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-#	"*": {
-#		"on_update": "method",
-#		"on_cancel": "method",
-#		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"User Permission": {
+		"after_insert": "uniflowerp.uniflowerp.utils.user_permission.after_insert",
+		"validate": "uniflowerp.uniflowerp.utils.user_permission.validate",
+		"on_trash": "uniflowerp.uniflowerp.utils.user_permission.on_trash"
+	}
+}
 
 # Scheduled Tasks
 # ---------------
