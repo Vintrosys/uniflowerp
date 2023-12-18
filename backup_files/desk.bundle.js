@@ -112,22 +112,3 @@ import "./frappe/scanner";
 
 
 // import { sum } from 'frappe/public/utils/util.js'
-const xhttpr = new XMLHttpRequest(); 
-		xhttpr.open('GET', 'https://app.uniflowerp.in/api/method/erpnext.crm.doctype.lead.lead.get_lead_list', true); 
-		xhttpr.send(); 
-		xhttpr.onload = ()=> { 
-		  if (xhttpr.status === 200) { 
-		      const response = JSON.parse(xhttpr.response); 
-			  let res=response['message'];
-			  console.log(res);
-			  let message='';
-			  for (let i = 0; i < res.length; i++) {
-				message ="Task Alert "+ res[i][1]+" assigned on "+res[i][2];
-				alert(message);
-			  }
-		      // Process the response data here 
-		  } else { 
-		      // Handle error 
-		  } 
-		}; 
-
