@@ -41,6 +41,15 @@ def create_user_permission(for_value, main_user, current_doc = None):
 
         new_doc.db_insert()
 
+        if main_user != user:
+
+            new_doc = frappe.new_doc("User Permission")
+            new_doc.user = user
+            new_doc.allow = "User"
+            new_doc.for_value = main_user
+
+            new_doc.db_insert()
+
 def changing_user_permission(self):
 
     old_user = frappe.db.get_value("User Permission", self.name, "user")
@@ -71,6 +80,10 @@ def deleting_user_permission(self):
     user_permission_list = frappe.get_all("User Permission", {"user": self.user, "allow": "User"}, ["name"], pluck = "name")
 
     user_permission_list += frappe.get_all("User Permission", {"for_value": self.for_value, "allow": "User"}, ["name"], pluck = "name")
+
+    user_permission_list += frappe.get_all("User Permission", {"user": self.for_value, "allow": "User"}, ["name"], pluck = "name")
+
+    user_permission_list += frappe.get_all("User Permission", {"for_value": self.user, "allow": "User"}, ["name"], pluck = "name")
 
     for user_permission in user_permission_list:
 

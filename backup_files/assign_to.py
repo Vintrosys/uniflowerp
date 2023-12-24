@@ -128,17 +128,31 @@ def add(args=None):
 	if users_with_duplicate_todo:
 		user_list = format_message_for_assign_to(users_with_duplicate_todo)
 		frappe.msgprint(_("Already in the following Users ToDo list:{0}").format(user_list, alert=True))
+	
+	if args.get("doctype"):
+		if args.get("doctype") == "Event":
+			result=frappe.db.get_list('Event',
+			filters={
+						'status': 'Open'
+					},
+					fields=['name','subject','starts_on','_assign' ],
+					as_list=True
+				)
+			print(result,'-------------before to called-------------------')
+			message="Hi "+str(result[0][3])[2:-2]+" New Event Assinged - "+str(result[0][1])+" on "+str(result[0][2])
+			frappe.publish_realtime(event='msgprint',message=message,user=str(result[0][3])[2:-2])
+		else:
+			
+			from frappe.utils import comma_and,	get_link_to_form
 
-	result=frappe.db.get_list('Event',
-	filters={
-		        'status': 'Open'
-		    },
-			fields=['name','subject','starts_on','_assign' ],
-		    as_list=True
-		)
-	print(result,'-------------before to called-------------------')
-	message="Hi "+str(result[0][3])[2:-2]+" New Event Assinged - "+str(result[0][1])+" on "+str(result[0][2])
-	frappe.publish_realtime(event='msgprint',message=message,user=str(result[0][3])[2:-2])
+			for custom_user in json.loads(args.get("assign_to")):
+
+				link = get_link_to_form(args.get('doctype'), args.get('name'))
+
+				message= f"Hi {custom_user}, <b>New {args.get('doctype')}: {link}</b> Assigned To You."
+
+				frappe.publish_realtime(event='msgprint',message=message,user=str(custom_user))
+
 	return get(args)
 
 
