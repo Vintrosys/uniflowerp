@@ -495,3 +495,17 @@ def add_lead_to_prospect(lead, prospect):
 		title=_("Lead -> Prospect"),
 		indicator="green",
 	)
+
+@frappe.whitelist(allow_guest=True)
+def get_lead_list():
+	user='[\"'+frappe.get_user().doc.name+'\"]'
+	result=frappe.db.get_list('Event',
+	    filters={
+	        'status': 'Open',
+			'_assign':user
+	    },
+		fields=['name','subject','starts_on' ],
+	    order_by='starts_on desc',
+	    as_list=True
+	)
+	return result
