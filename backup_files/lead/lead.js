@@ -163,6 +163,19 @@ erpnext.LeadController = class LeadController extends frappe.ui.form.Controller 
 extend_cscript(cur_frm.cscript, new erpnext.LeadController({ frm: cur_frm }));
 
 frappe.ui.form.on("Lead", {
+	validate: function(frm) {
+		// Check if an event is created
+		if (frm.doc.__unsaved && frm.doc.activity_type == "Event") {
+			frappe.realtime.on('event_created_notification', function(data) {
+				frappe.show_alert({
+					message: data.message,
+					indicator: 'green'
+				});
+			});
+
+			frappe.publish_realtime(event='event_created_notification', message='An event has been created through lead activities');
+		}
+	},
 	custom_primary_phone: async function(frm){
 		frm.doc.phone = frm.doc.custom_primary_phone;
 	},
