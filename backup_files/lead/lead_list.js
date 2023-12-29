@@ -29,12 +29,14 @@ frappe.listview_settings['Lead'] = {
 	refresh: function(listview) {
 		if(listview.page.fields_dict.company && listview.page.fields_dict.company.get_input_value() != frappe.defaults.get_user_default("Company") && !frappe.ignore_company){
 			listview.page.fields_dict.company.set_input(frappe.defaults.get_user_default("Company"))
+			console.log(frappe.defaults.get_user_default("Company"));
 			listview.refresh()
 		}
 	},
 	onload: function(listview) {
 		if(listview.page.fields_dict.company && listview.page.fields_dict.company.get_input_value() != frappe.defaults.get_user_default("Company") && !frappe.ignore_company){
 			listview.page.fields_dict.company.set_input(frappe.defaults.get_user_default("Company"))
+			console.log(frappe.defaults.get_user_default("Company"));
 			listview.refresh()
 		}
 		if (frappe.boot.user.can_create.includes("Prospect")) {
