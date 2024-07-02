@@ -1,0 +1,57 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:lead_source_details",
+ "creation": "2023-12-30 23:32:09.806750",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_iu0b",
+  "lead_source_details",
+  "companywise_lead_source_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_iu0b",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "lead_source_details",
+   "fieldtype": "Data",
+   "label": "Lead Source Details",
+   "unique": 1
+  },
+  {
+   "fieldname": "companywise_lead_source_details",
+   "fieldtype": "Table",
+   "label": "Companywise Lead Source Details",
+   "options": "Companywise Lead Source Details",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-02 10:12:20.474494",
+ "modified_by": "Administrator",
+ "module": "Uniflowerp",
+ "name": "Lead Source Details",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

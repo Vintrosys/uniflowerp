@@ -1,29 +1,32 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2023-10-28 11:31:49.233138",
+ "creation": "2023-12-30 23:35:48.458797",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "company"
+  "section_break_uube",
+  "subject"
  ],
  "fields": [
   {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Company",
-   "options": "Company"
+   "fieldname": "section_break_uube",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "label": "Subject"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-10-28 11:33:11.625587",
+ "modified": "2023-12-31 19:23:10.405702",
  "modified_by": "Administrator",
  "module": "Uniflowerp",
- "name": "Companywise Lead Source Details",
+ "name": "Lead Site Visit Details",
  "owner": "Administrator",
  "permissions": [],
  "sort_field": "modified",
