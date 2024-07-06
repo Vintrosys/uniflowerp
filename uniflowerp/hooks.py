@@ -215,3 +215,7 @@ doc_events = {
 # auth_hooks = [
 #	"uniflowerp.auth.validate"
 # ]
+
+""" doctype_js = {
+    "Lead": "uniflowerp.uniflowerp.custom.duplicate_checker.js"
+} """

@@ -101,7 +101,7 @@ class Lead(SellingController, CRMNote):
 			self.custom_stage = 'Unqualified'
 
 
-	def update_lead_duplicates(self):
+	def update_lead_duplicates(self):	
 		lead_list = frappe.db.get_list("Lead", {'custom_primary_phone': self.custom_primary_phone}, 
 			['name', "company_name", "email_id", "custom_primary_phone", "source", "custom_source_details",
 			"creation"])
