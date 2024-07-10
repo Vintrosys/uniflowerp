@@ -1,0 +1,31 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "condition": "doc.custom_is_duplicate == 1",
+ "creation": "2024-07-08 17:11:41.585135",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Lead",
+ "enabled": 1,
+ "event": "Save",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "A duplicate lead has been created with lead id {{ doc.name }}",
+ "message_type": "Markdown",
+ "modified": "2024-07-10 11:04:26.250890",
+ "modified_by": "saranyaswaminathan89@gmail.com",
+ "module": "Uniflowerp",
+ "name": "Duplicate Lead",
+ "owner": "saranyaswaminathan89@gmail.com",
+ "recipients": [
+  {
+   "receiver_by_role": "Sales Manager"
+  }
+ ],
+ "send_system_notification": 1,
+ "send_to_all_assignees": 0,
+ "sender": "Saranya-Gmail",
+ "sender_email": "saranyaswaminathan89@gmail.com",
+ "subject": "Lead - Duplicate of {{ doc.name }}"
+}
