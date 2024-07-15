@@ -123,6 +123,10 @@ doc_events = {
 		"after_insert": "uniflowerp.uniflowerp.utils.user_permission.after_insert",
 		"validate": "uniflowerp.uniflowerp.utils.user_permission.validate",
 		"on_trash": "uniflowerp.uniflowerp.utils.user_permission.on_trash"
+	},
+    
+	"Lead": {
+        "before_save":"uniflowerp.uniflowerp.utils.duplicate_checker.before_save"
 	}
 }
 
@@ -217,5 +221,5 @@ doc_events = {
 # ]
 
 """ doctype_js = {
-    "Lead": "uniflowerp.uniflowerp.custom.duplicate_checker.js"
+    "Lead": "uniflowerp/utils/duplicate_checker.js"
 } """
