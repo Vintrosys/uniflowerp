@@ -97,6 +97,7 @@ class Lead(SellingController, CRMNote):
 		self.title = self.company_name or self.lead_name
 
 	def check_email_id_is_unique(self):
+		frappe.msgprint("in backupfiles/lead.py")
 		if self.email_id:
 			# validate email is unique
 			if not frappe.db.get_single_value("CRM Settings", "allow_lead_duplication_based_on_emails"):
@@ -109,7 +110,7 @@ class Lead(SellingController, CRMNote):
 
 				if duplicate_leads:
 					frappe.throw(
-						_("Email Address must be unique, it is already used in {0}").format(
+						_(" {0}").format(
 							comma_and(duplicate_leads)
 						),
 						frappe.DuplicateEntryError,

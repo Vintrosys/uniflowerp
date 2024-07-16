@@ -94,7 +94,7 @@ class Lead(SellingController, CRMNote):
 		self.set_lead_name()
 		self.set_title()
 		self.set_status()
-		self.check_email_id_is_unique()
+		# self.check_email_id_is_unique()
 		self.validate_email_id()
 		self.update_lead_duplicates()
 		if self.status == "RNR5":
@@ -173,6 +173,7 @@ class Lead(SellingController, CRMNote):
 		self.title = self.company_name or self.lead_name
 
 	def check_email_id_is_unique(self):
+		frappe.msgprint("IN bacupfiles/lead/lead.py")
 		if self.email_id:
 			# validate email is unique
 			if not frappe.db.get_single_value("CRM Settings", "allow_lead_duplication_based_on_emails"):
