@@ -1,43 +1,83 @@
 import frappe
 from frappe.model.document import Document
+from datetime import date, datetime
 
-@frappe.whitelist()
-def check_for_duplicate_lead(lead):
-    frappe.msgprint("Inside dup check py")
-    lead = frappe.parse_json(lead)
-    lead_name = lead.get('name')
-    email_id = lead.get('email_id')
-    phone = lead.get('custom_primary_phone')
 
-    # Check for existing leads with the same email or phone number
-    existing_leads = frappe.get_all('Lead', filters=[
-        ['email_id', '=', email_id],
-        ['custom_primary_phone', '=', phone]
-    ], fields=['name', 'email_id', 'custom_primary_phone', 'source', 'custom_source_details']) # add  'creation_date' later
+def before_save(self, event):
+    update_lead_duplicates(self)
 
-    if not existing_leads:
-        existing_leads = frappe.get_all('Lead', filters=[
-            ['custom_primary_phone', '=', phone]
-        ], fields=['name', 'email_id', 'custom_primary_phone', 'source', 'custom_source_details']) # add  'creation_date' later
+def update_lead_duplicates(self):	
 
-    if existing_leads:
-        for existing_lead in existing_leads:
-            # Fetch the lead document
-            lead_doc = frappe.get_doc('Lead', existing_lead.name)
+    if frappe.flags.in_update_lead_duplicates:
+        return
 
-            # Update the Lead Duplicate Details child table
-            lead_duplicate_detail = lead_doc.append('custom_lead_duplicate_details', {})
-            lead_duplicate_detail.name1 = lead_name
-            lead_duplicate_detail.phone_no = phone
-            lead_duplicate_detail.email = email_id
-            lead_duplicate_detail.source = lead.get('source')
-            lead_duplicate_detail.source_detail = lead.get('source_detail')
-            # lead_duplicate_detail.created_date_time = lead.get('creation')
+    # Set the flag to prevent recursion
+    frappe.flags.in_update_lead_duplicates = True
 
-            if existing_lead.email_id != email_id:
-                lead_duplicate_detail.secondary_email = email_id
+    lead_list = frappe.db.get_list("Lead", {'custom_primary_phone': self.custom_primary_phone, "name": ["!=", self.name] }, 
+        ['name', "company_name", "email_id", "custom_primary_phone", "source", "custom_source_details",
+        "creation"])
+    lead_list += frappe.db.get_list("Lead", {'email_id': self.email_id, "name": ["!=", self.name]}, 
+        ['name', "company_name", "email_id", "custom_primary_phone", "source", "custom_source_details",
+        "creation"])
+    
+    lead_details = [i for n, i in enumerate(lead_list) if i not in lead_list[n + 1:]]
 
-            lead_doc.save()
-            return {"message": "Lead updated with duplicate details."}
+    # Sort leads by creation date
+    lead_details = sorted(lead_details, key=lambda x: x['creation'])
 
-    return {"message": "No matching lead found."}
+    # Update the child table of the lead created very first
+    if lead_details:	
+        self.custom_is_duplicate = 1		
+        parent_lead = lead_details[0]
+        lead_doc = frappe.get_doc("Lead", parent_lead["name"])
+
+        latest_lead = lead_details[-1]
+        latest_doc = frappe.get_doc("Lead", latest_lead["name"])
+
+        if lead_doc.email_id != self.email_id:
+            secondary_email = self.email_id
+        else:
+            secondary_email = None
+
+        if isinstance(latest_doc.creation, str):
+            latest_doc.creation = datetime.strptime(latest_doc.creation, '%Y-%m-%d %H:%M:%S.%f')
+        latest_doc_creation_date = latest_doc.creation.date()
+        frappe.msgprint(f"latest doc creation time: {latest_doc_creation_date}")
+
+        if isinstance(self.creation, str):
+            self.creation = datetime.strptime(self.creation, '%Y-%m-%d %H:%M:%S.%f')
+        self_creation_date = self.creation.date()
+        frappe.msgprint(f"self creation: {self_creation_date}")
+
+        difference_in_date = (self_creation_date - latest_doc_creation_date).days
+        frappe.msgprint(f"date diff: {difference_in_date}")
+
+        lead_doc.append("custom_lead_duplicate_details", {
+            "name1": self.company_name, 
+            "lead_id": self.name,
+            "email": self.email_id if not(secondary_email) else None,
+            "custom_secondary_email": secondary_email,
+            "phone_no": self.custom_primary_phone,
+            "source": self.source,
+            "source_detail": self.custom_source_details if self.custom_source_details else None,
+            "created_date_and_time": self.creation,
+            "custom_age__range": difference_in_date,
+
+        })
+        lead_doc.save(ignore_permissions=True)
+        frappe.msgprint(f"This lead is the duplicate of : {lead_doc.name}<br><br>Lead duplicates updated successfully.", title="Duplicate Lead", indicator="blue")
+    elif self.is_new():
+        self.custom_is_duplicate = 0
+        frappe.msgprint(f"A new lead has been created with ID : {self.name}")
+    else:
+        self.custom_is_duplicate = 0
+
+frappe.flags.in_update_lead_duplicates = False
+
+
+
+
+
+
+
