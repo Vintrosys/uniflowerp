@@ -123,12 +123,14 @@ doc_events = {
 		"after_insert": "uniflowerp.uniflowerp.utils.user_permission.after_insert",
 		"validate": "uniflowerp.uniflowerp.utils.user_permission.validate",
 		"on_trash": "uniflowerp.uniflowerp.utils.user_permission.on_trash"
-	},
-    
-	"Lead": {
-        "before_save":"uniflowerp.uniflowerp.utils.duplicate_checker.before_save"
 	}
+    
 }
+
+"""  "Lead": {
+        "before_save":"uniflowerp.uniflowerp.utils.duplicate_checker.before_save"
+	}  """
+
 
 # Scheduled Tasks
 # ---------------
@@ -220,6 +222,6 @@ doc_events = {
 #	"uniflowerp.auth.validate"
 # ]
 
-""" doctype_js = {
+doctype_js = {
     "Lead": "uniflowerp/utils/duplicate_checker.js"
-} """
+}
