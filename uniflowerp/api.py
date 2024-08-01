@@ -54,18 +54,18 @@ def handle_duplicated_lead(doc, event):
 
         # ? SET THE CHILD TABLE DOC DATA
         lead_doc = {
-            "lead_name": doc.company_name,
-            "lead_owner": doc.lead_owner,
-            "phone_no": doc.custom_primary_phone,
-            "email": parent_doc.email_id,
-            "source": doc.source,
-            "source_detail": doc.custom_source_details,
-            "created_date_and_time": doc.creation,
+            "lead_name": doc.get("company_name"),
+            "lead_owner": doc.get("lead_owner"),
+            "phone_no": doc.get("custom_primary_phone"),
+            "email": parent_doc.get("email_id"),
+            "source": doc.get("source"),
+            "source_detail": doc.get("custom_source_details"),
+            "created_date_and_time": doc.get("creation"),
         }
 
         # ? SET THE SECONDARY EMAIL
-        if parent_doc.email_id != doc.email_id:
-            lead_doc["custom_secondary_email"] = doc.email_id
+        if parent_doc.get("email_id") != doc.get("email_id"):
+            lead_doc["custom_secondary_email"] = doc.get("email_id")
 
         # ? SET THE DATE RANGE
         child_list = frappe.get_all(
@@ -78,15 +78,16 @@ def handle_duplicated_lead(doc, event):
         # ? IF THE CHILD LEAD EXISTS USE IT'S CREATION TIME
         if child_list:
             days_diff = date_diff(
-                get_datetime(doc.creation),
-                get_datetime(child_list[0].created_date_and_time),
+                get_datetime(doc.get("creation")),
+                get_datetime(child_list[0].get("created_date_and_time")),
             )
             lead_doc["custom_age__range"] = days_diff
 
         # ? ELSE USE PARENT'S CREATION TIME
         else:
             days_diff = date_diff(
-                get_datetime(doc.creation), get_datetime(parent_doc.creation)
+                get_datetime(doc.get("creation")),
+                get_datetime(parent_doc.get("creation")),
             )
             lead_doc["custom_age__range"] = days_diff
 
@@ -98,10 +99,10 @@ def handle_duplicated_lead(doc, event):
         # ! SEND EMAIL TO LEAD OWNER
         # ? DEFINE VARIABLES
         lead_owner_email = frappe.db.get_value(
-            "User", doc.lead_owner or parent_doc.lead_owner, "email"
+            "User", doc.get("lead_owner") or parent_doc.get("lead_owner"), "email"
         )
         lead_owner = frappe.db.get_value(
-            "User", doc.lead_owner or parent_doc.lead_owner, "full_name"
+            "User", doc.get("lead_owner") or parent_doc.get("lead_owner"), "full_name"
         )
         company = parent_doc.company
         parent_lead = parent_lead
@@ -134,9 +135,9 @@ def handle_duplicated_lead(doc, event):
 
         # ! SEND EMAIL TO NEW LEAD
         # ? DEFINE VARIABLES
-        lead_email = doc.email_id or parent_doc.email
-        lead_name = doc.company or parent_doc.lead_name
-        company = parent_doc.company
+        lead_email = doc.get("email_id") or parent_doc.get("email")
+        lead_name = doc.get("company") or parent_doc.get("lead_name")
+        company = parent_doc.get("company")
 
         # ? LEAD OWNER HTML
         lead_owner_email_html = f"""
