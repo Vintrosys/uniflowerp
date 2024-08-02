@@ -6,19 +6,21 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "name1",
+  "lead_name",
+  "lead_owner",
   "phone_no",
   "email",
   "source",
   "source_detail",
   "created_date_and_time",
-  "lead_id"
+  "section_break_nzqa",
+  "lead_id",
+  "name1"
  ],
  "fields": [
   {
    "fieldname": "name1",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Name"
   },
   {
@@ -58,12 +60,29 @@
    "fieldtype": "Data",
    "label": "Lead ID",
    "options": "Lead"
+  },
+  {
+   "fieldname": "lead_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Lead Name"
+  },
+  {
+   "fieldname": "lead_owner",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Lead Owner",
+   "options": "User"
+  },
+  {
+   "fieldname": "section_break_nzqa",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-11-02 15:47:46.254930",
+ "modified": "2024-08-01 23:42:04.632335",
  "modified_by": "Administrator",
  "module": "Uniflowerp",
  "name": "Lead Duplicate Details",
